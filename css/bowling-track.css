@@ -1,0 +1,27 @@
+
+.track:first-child {
+    display: inline-grid;
+    grid-template: 30px 30px 30px 30px 500px / 30px 30px 30px 30px 30px 30px 30px;
+}
+
+.bowl {
+    background-color: white;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.wood{
+    background-color: rgb(219, 167, 124);
+}
+
+.wood:first-child{
+    grid-area: 1 / 1 / 5 / -1;
+}
+
+.wood:last-child {
+    grid-area: 5 / 1 / -1 / -1;
+    
+}
