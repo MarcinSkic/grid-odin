@@ -12,17 +12,37 @@ header{
 h1 {
     margin: 0;
     padding: 5px 5px;
-    height: 2.5rem;
+    height: 3rem;
+    box-sizing: border-box;
 
     color: aliceblue;
 
 }
 
 main {
-    height: calc(100vh - 2.5rem);
+    height: calc(100vh - 3rem);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+main.justify-start {
+    height: initial;
+}
+
+footer {
+    text-align: center;
+    color: aliceblue;
+    
+    background-color: #18285f;
+    margin-top: 10px;
+    padding: 10px 0;
+}
+
+:any-link {
+    color: inherit;
+    text-decoration: none;
 }
 
 .return-to-menu {

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bowling-track.css">
+    <link rel="stylesheet" href="../css/stapleDesign.css">
+    <link rel="stylesheet" href="../css/wesbos.css">
+    <script src="../js/returnToMenu.js" defer></script>
+    <title>Flexbox VS Grid</title>
+    <style>
+        :root {
+            --elements-color: #eb9f12;
+            --elements-border-color: #8f5f06;
+            --container-background-color: #89caff;
+        }
+    </style>
+    <style> /*ChangeDirection*/
+        .flex-flipper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .flex-flipper > * {
+            padding: 5px;
+            margin: 5px;
+
+            background-color: var(--elements-color);
+            
+            border: 1px solid var(--elements-border-color);
+            border-radius: 5px;
+        }
+
+        .flex-flipper.flipped {
+            flex-direction: column;
+        }
+
+        .grid-flipper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(1px,min-content));
+            justify-content: center;
+        }
+
+        .grid-flipper > * {
+            padding: 5px;
+            margin: 5px;
+
+            background-color: var(--elements-color);
+            
+            border: 1px solid var(--elements-border-color);
+            border-radius: 5px;
+        }
+
+        .grid-flipper.flipped {
+            grid-template-columns: 1fr;
+        }
+    </style>
+    <style> /*Buttons on side*/
+        .buttons-on-side > div > div > div {
+            margin: 0 10px;
+
+            background-color: azure;
+            border: 1px solid #daecec;
+        }
+        
+        .buttons-on-side > div > div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons-on-side .flex > div {
+            display: flex;
+            gap: 5px;
+        }
+
+        .buttons-on-side .flex > div > :first-child{
+            text-align: start;
+            flex: 1;
+        }
+
+        .buttons-on-side .grid > div {
+            text-align: start;
+            
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-auto-columns: min-content;
+            grid-auto-flow: column;
+
+            gap: 5px;
+        }
+    </style>
+    <style>
+        .media-player-bar .bar {
+            height: 10px;
+            border-radius: 5px;
+            background-color: var(--elements-color);
+        }
+
+        .media-player-bar .flex {
+            padding: 0 10px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .media-player-bar .flex .bar {
+            flex: 1;
+        }
+
+        .media-player-bar .grid {
+            padding: 0 10px;
+            display: grid;
+            grid-template-columns: min-content min-content min-content 1fr min-content min-content;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+    <style>
+        .perfectly-centered > div > div{
+            background-color: var(--container-background-color);
+            text-align: start;
+            margin: 0 10px;
+            height: 200px;
+        }
+        .perfectly-centered > div > div *{
+            width: fit-content;
+        }
+
+        .perfectly-centered .flex {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .perfectly-centered .grid {
+            display: grid;
+            align-content: center;
+            justify-items: center;  /*Important because column is as wide as widest item so shorter item will be misaligned*/
+        }
+    </style>
+    <style>
+        .position-in-corners .grid {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 50px;
+            background-color: var(--container-background-color);
+
+            display: grid;
+            grid-template: repeat(2,1fr) / repeat(2,1fr);
+        }
+
+        .position-in-corners .grid > div {
+            padding: 5px;
+            border: 1px solid var(--elements-border-color);
+            background-color: var(--elements-color);
+        }
+    </style>
+    <style>
+        .stacked-layout .flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            row-gap: 10px;
+
+        }
+        .stacked-layout .flex > div {
+            background-color: #eb9f12;
+            border: 1px solid var(--elements-border-color);
+
+            width: 30%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <style>
+        .unknown-content-size .flex {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .unknown-content-size > div > div > div {
+            background-color: var(--elements-color);
+            border: 1px solid var(--elements-border-color);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .unknown-content-size .grid {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+    <style>
+        .unknown-amount .flex {
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .unknown-amount .flex > div {
+            flex: 1;
+            min-width: 50px;
+            background-color: var(--elements-color);
+            border: 1px solid var(--elements-border-color);
+        }
+
+        .unknown-amount .grid {
+            margin-top: 5px;
+            display: grid;
+            gap: 5px;
+            grid-template-columns: repeat(auto-fit,minmax(50px,1fr));
+        }
+        .unknown-amount .grid > div {
+            background-color: var(--elements-color);
+            border: 1px solid var(--elements-border-color);
+        }
+    </style>
+    <style>
+        .variable-widths-each-row .flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .variable-widths-each-row .flex div {
+            padding: 5px;
+
+            background-color: var(--elements-color);
+
+            border: 1px solid var(--elements-border-color);
+            border-radius: 5px;
+
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Flexbox VS Grid</h1>
+    </header>
+    <a href="../index.html" class="return-to-menu">Return to Index</a>
+    
+    <main class="justify-start">
+        <section>
+            <h2>Change direction</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex-flipper">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div>8</div>
+                    <div>9</div>
+                    <div>10</div>
+                </div>
+                <button onclick="changeFlexDirection()">Change</button>
+                <script>
+                    function changeFlexDirection() {
+                        document.querySelector('.flex-flipper').classList.toggle('flipped');
+                    }
+                </script>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div class="grid-flipper">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div>8</div>
+                    <div>9</div>
+                    <div>10</div>
+                </div>
+                <button onclick="changeGridDirection()">Change</button>
+                <script>
+                    function changeGridDirection() {
+                        document.querySelector('.grid-flipper').classList.toggle('flipped');
+                    }
+                </script>
+        </div>
+        </section>
+        <section class="buttons-on-side">
+            <h2>Buttons on the side</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <div><span>Civilization</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Sobie I wam</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Right in two</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Mr Blue Sky</span><button>Star</button><button>Like</button><button>Del</button></div>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div class="grid">
+                    <div><span>Civilization</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Sobie I wam</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Right in two</span><button>Star</button><button>Like</button><button>Del</button></div>
+                    <div><span>Mr Blue Sky</span><button>Star</button><button>Like</button><button>Del</button></div>
+                </div>
+            </div>
+        </section>
+        <section class="media-player-bar">
+            <h2>Media player bar</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <button>smth</button>
+                    <button>smth</button>
+                    <button>smth</button>
+                    <div class="bar"></div>
+                    
+                    <button>smth</button>
+                    <button>smth</button>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div class="grid">
+                    <button>smth</button>
+                    <button>smth</button>
+                    <button>smth</button>
+                    <div class="bar"></div>
+                    <button>smth</button>
+                    <button>smth</button>
+                </div>
+            </div>
+        </section>
+        <section class="perfectly-centered">
+            <h2>Perfectly Centered</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <h4>Center me!</h4>
+                    <p>Me too!</p>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div class="grid">
+                    <h4>Center me!</h4>
+                    <p>Me too!</p>
+                </div>
+            </div>
+        </section>
+        <section class="position-in-corners">
+            <h2>Positioned in corners</h2>
+            <div>
+                <h3>Flex</h3>
+                <div>Flex can't do this HAHA</div>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div class="grid">
+                    <div style="justify-self: start; align-self:start;">1</div>
+                    <div style="justify-self: end; align-self:start;">TWO</div>
+                    <div style="justify-self: start; align-self:end;">3</div>
+                    <div style="justify-self: end; align-self: end;">4</div>
+                </div>
+            </div>
+        </section>
+        <section class="stacked-layout">
+            <h2>Stacked layout</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <div>Grid can't do this HAHA</div>
+            </div>
+        </section>
+        <section class="unknown-content-size">
+            <h2>Unknown content size</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <div>Short</div>
+                    <div>Longerrrrrrrrrr</div>
+                    <div>Extra hiper super duper long</div>
+                    <div>💩</div>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>        
+                <div class="grid">
+                    <div>Short</div>
+                    <div>Longerrrrrrrrrr</div>
+                    <div>Extra hiper super duper long</div>
+                    <div>💩</div>
+                </div>
+            </div>
+        </section>
+        <section class="unknown-amount">
+            <h2>Unknown number of items</h2>
+            <div>
+                <h3>Flex</h3>
+                <button onclick="addFlexItem()">+ Add</button>
+                <div class="flex">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                </div>
+                <div>Flex can't do this exactly, it will create stacked layout</div>
+                <script>
+                    let nextFlexNumber = 6;
+                    const flexContainer = document.querySelector('.unknown-amount .flex');
+                    function addFlexItem(){
+                        const div = document.createElement('div');
+                        div.textContent = nextFlexNumber;
+                        nextFlexNumber++;
+
+                        flexContainer.append(div);
+                    }
+                </script>
+            </div>
+            <div>
+                <h3>Grid</h3>
+                <button onclick="addGridItem()">+ Add</button>
+                <div class="grid">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <script>
+                    let nextGridNumber = 6;
+                    const gridContainer = document.querySelector('.unknown-amount .grid');
+                    function addGridItem(){
+                        const div = document.createElement('div');
+                        div.textContent = nextGridNumber;
+                        nextGridNumber++;
+
+                        gridContainer.append(div);
+                    }
+                </script>
+            </div>
+        </section>
+        <section class="variable-widths-each-row">
+            <h2>Variable width each row</h2>
+            <div>
+                <h3>Flex</h3>
+                <div class="flex">
+                    <div>Short</div>
+                    <div>Longerrrrrrrrrr</div>
+                    <div>Extra hiper super duper long</div>
+                    <div>💩</div>
+                    <div>This is many words</div>
+                    <div>Lorem ipsum itd</div>
+                    <div>10</div>
+                    <div>Snickers</div>
+                    <div>Martin Is Cool</div>
+                    <div>Short</div>
+                </div>
+            </div>
+            <div>
+                <h3>Grid</h3>        
+                <div>Grid can't do this HAHA</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <a href="https://www.youtube.com/watch?v=HYji_V2aYa0">Source for this exercises</a>
+    </footer>
+</body>
+</html>
