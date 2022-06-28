@@ -143,6 +143,36 @@
         }
     </style>
     <style>
+        .position-in-corners {
+            --box-size: 20px;
+            --container-size: 200px;
+        }
+
+        .position-in-corners .flex {
+            width: var(--container-size);
+            height: var(--container-size);
+            margin: 0 auto 50px;
+            background-color: var(--container-background-color);
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--container-size) - var(--box-size)*2);
+        }
+
+        .position-in-corners .flex > div {
+            width: var(--box-size);
+            height: var(--box-size);
+            box-sizing: border-box;
+
+            border: 1px solid var(--elements-border-color);
+
+            background-color: var(--elements-color);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .position-in-corners .grid {
             width: 200px;
             height: 200px;
@@ -368,7 +398,13 @@
             <h2>Positioned in corners</h2>
             <div>
                 <h3>Flex</h3>
-                <div>Flex can't do this HAHA</div>
+                <div class="flex">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                </div>
+                <div>Flex can do this, but elements must be equals in dimensions</div>
             </div>
             <div>
                 <h3>Grid</h3>
